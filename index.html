@@ -9,7 +9,7 @@
   <body>
     <h1>Scrollable elements in non-default writing modes</h1>
 
-    
+
     <h2>scrollLeft and scrollTop properties</h2>
 
     <p>
@@ -165,7 +165,7 @@
       <code>scrollLeft</code> is nonzero at the initial position.
     </p>
 
-    <h2>Writing mode <code>vertical-lr</code></h2>
+    <h2>Writing mode <code>vertical-rl</code></h2>
 
     <p>
       If the lines of text are vertical and flowing from right to left
@@ -223,17 +223,12 @@
 
     <p>The cases discussed above are the most common writing modes used in
       practice. However, one can actually combine any value of
-      <code>direction</code> and <code>writing-mode</code>.
-      The latter has two more properties
-      <code>sideways-rl</code> and <code>sideways-lr</code>
-      but they behave respectively the same as
-      <code>vertical-rl</code> and <code>vertical-lr</code>
-      when it comes to content flow
-      (they only affect <a href="https://drafts.csswg.org/css-writing-modes-4/#typographic-mode">typographic mode</a>). So there are really
-      only two remaining cases:
+      <code>direction</code> and <code>writing-mode</code>. The latter
+      has <code>sideways-rl</code> and <code>sideways-lr</code> values
+      which are not implemented yet in all browsers.
     </p>
 
-    <h3>vertical-lr, rtl</h3>
+    <h3><code>vertical-lr</code>, <code>rtl</code></h3>
     <div class="example" style="writing-mode: vertical-lr; direction: rtl;">
       <div class="scroller">
         <div class="grid">
@@ -271,7 +266,7 @@
         Firefox and Safari but nonzero in Chrome.</li>
     </ul>
 
-    <h3>vertical-rl, rtl</h3>
+    <h3><code>vertical-rl</code>, <code>rtl</code></h3>
     <div class="example" style="writing-mode: vertical-rl; direction: rtl;">
       <div class="scroller">
         <div class="grid">
@@ -313,6 +308,107 @@
         Firefox and Safari but nonzero in Chrome.</li>
     </ul>
 
+    <h3><code>sideways-rl</code></h3>
+
+    <div class="example" style="writing-mode: sideways-rl">
+      <div class="scroller">
+        <div class="grid">
+          <div>0</div>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+          <div>6</div>
+          <div>7</div>
+          <div>8</div>
+        </div>
+      </div>
+      <div>
+        <label>element.scrollLeft</label>
+        <input type="number"/>
+      </div>
+      <div>
+        <label>element.scrollTop</label>
+        <input type="number"/>
+      </div>
+    </div>
+
+    <h3><code>sideways-lr</code></h3>
+    <div class="example" style="writing-mode: sideways-lr">
+      <div class="scroller">
+        <div class="grid">
+          <div>0</div>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+          <div>6</div>
+          <div>7</div>
+          <div>8</div>
+        </div>
+      </div>
+      <div>
+        <label>element.scrollLeft</label>
+        <input type="number"/>
+      </div>
+      <div>
+        <label>element.scrollTop</label>
+        <input type="number"/>
+      </div>
+    </div>
+
+    <h3><code>sideways-lr</code>, <code>rtl</code></h3>
+    <div class="example" style="writing-mode: sideways-lr; direction: rtl;">
+      <div class="scroller">
+        <div class="grid">
+          <div>0</div>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+          <div>6</div>
+          <div>7</div>
+          <div>8</div>
+        </div>
+      </div>
+      <div>
+        <label>element.scrollLeft</label>
+        <input type="number"/>
+      </div>
+      <div>
+        <label>element.scrollTop</label>
+        <input type="number"/>
+      </div>
+    </div>
+
+    <h3>sideways-rl, rtl</h3>
+    <div class="example" style="writing-mode: sideways-rl; direction: rtl;">
+      <div class="scroller">
+        <div class="grid">
+          <div>0</div>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+          <div>6</div>
+          <div>7</div>
+          <div>8</div>
+        </div>
+      </div>
+      <div>
+        <label>element.scrollLeft</label>
+        <input type="number"/>
+      </div>
+      <div>
+        <label>element.scrollTop</label>
+        <input type="number"/>
+      </div>
+    </div>
+
     <h2>Conclusion</h2>
 
     <ol>
@@ -332,14 +428,11 @@
         Absolute values of <code>scrollLeft</code>
         and <code>scrollTop</code> are compatible in Firefox and Safari:
         They are alway zero at the initial scroll position.
-        However, Chromium behaves differently if <code>direction</code>
-        is <code>rtl</code> or if <code>writing-mode</code> is
-        <code>vertical-rl</code>.
+        However, Chromium sometimes behaves differently.
       </li>
       <li>
         Scrollbar positions are compatible in Chromium and Safari. However,
-        Firefox behaves differently if for <code>vertical-lr, lrt</code>
-        and  <code>vertical-rl, rlt</code> writing modes.
+        Firefox sometimes behaves differently.
     </ol>
 
     <p>
