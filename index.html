@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scrollable elements in non-default writing modes</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="style.css"></link>
+    <script type="text/javascript" src="script.js"></script>
+  </head>
+  <body>
+    <h1>Scrollable elements in non-default writing modes</h1>
+
+    
+    <h2>scrollLeft and scrollTop properties</h2>
+
+    <p>
+      When an element has scrollable overflow, it is possible to use its
+      <code>scrollLeft</code> and <code>scrollTop</code> properties to get
+      and set its horizontal and vertical scroll positions:
+    </p>
+
+    <div class="example">
+      <div class="scroller">
+        <div class="grid">
+          <div>0</div>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+          <div>6</div>
+          <div>7</div>
+          <div>8</div>
+        </div>
+      </div>
+      <div>
+        <label>element.scrollLeft</label>
+        <input type="number"/>
+      </div>
+      <div>
+        <label>element.scrollTop</label>
+        <input type="number"/>
+      </div>
+    </div>
+
+    <p>
+      The <code>scrollLeft</code> value (respectively <code>scrollTop</code>)
+      increases when scrolling the element rightward (respectively downward).
+    </p>
+    <p>
+      Modern browsers follow this convention in all
+      <a href="https://drafts.csswg.org/css-writing-modes-4/#writing-mode">writing modes</a>,
+      even if in the past Internet Explorer used to have a different convention.
+    </p>
+
+    <h2>Default writing mode</h2>
+
+    <p>
+      By default, the lines of the web page are horizontal and flow vertically
+      from top to bottom
+      (CSS <code>writing-mode</code> property set to
+      <code>horizontal-tb</code>) and each one is read from left to right
+      (CSS <code>direction</code> property set to <code>ltr</code>).
+      In that writing mode,
+      there are more or less natural conventions for scrollable elements
+      that have always been followed by browsers:
+    </p>
+    <ol>
+      <li>Initially render the top left corner of the content
+        by
+        making it match the top left corner of the scrollable element.</li>
+      <li>
+        Put the horizontal scroll bar on the bottom and the vertical scroll bar
+        on the right.
+      </li>
+      <li>
+        Define <code>scrollLeft</code> and <code>scrollTop</code>
+        to be equal to zero for this initial position.
+      </li>
+    </ol>
+
+    <h2>Writing mode <code>vertical-lr</code></h2>
+
+    <p>
+      If the lines of text are vertical and flowing from left to right
+      (CSS <code>writing-mode</code> property set to <code>vertical-lr</code>)
+      then the start of the content is again the top left corner.
+    </p>
+    <p>
+      Browsers follow the same convention as above and
+      behave consistently:
+    </p>
+
+    <div class="example" style="writing-mode: vertical-lr">
+      <div class="scroller">
+        <div class="grid">
+          <div>0</div>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+          <div>6</div>
+          <div>7</div>
+          <div>8</div>
+        </div>
+      </div>
+      <div>
+        <label>element.scrollLeft</label>
+        <input type="number"/>
+      </div>
+      <div>
+        <label>element.scrollTop</label>
+        <input type="number"/>
+      </div>
+    </div>
+
+    <h2>Writing mode <code>rtl</code></h2>
+
+    <p>
+      If each line flows horizontally from right to left
+      (CSS <code>direction</code> property set to <code>ltr</code>)
+      then browsers follow the following conventions, obtained by inverting
+      the right/left sides:
+    </p>
+    <ol>
+      <li>Initially render the top right corner of the content by
+        making it match the top right corner of the scrollable element.
+      </li>
+      <li>
+        Put the vertical scroll bar on the left.
+      </li>
+    </ol>
+    <div dir="rtl" class="example">
+      <div class="scroller">
+        <div class="grid">
+          <div>0</div>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+          <div>6</div>
+          <div>7</div>
+          <div>8</div>
+        </div>
+      </div>
+      <div>
+        <label>element.scrollLeft</label>
+        <input type="number"/>
+      </div>
+      <div>
+        <label>element.scrollTop</label>
+        <input type="number"/>
+      </div>
+    </div>
+    <p>Safari and Firefox also follow the third one:
+      <ol start="3">
+        <li>Define <code>scrollLeft</code>
+          to be equal to zero for this initial position.</li>
+      </ol>
+    </p>
+    <p>
+      However, Chrome instead defines <code>scrollLeft</code> to be zero
+      when the element is scrolled to its leftmost position. This means that
+      <code>scrollLeft</code> is nonzero at the initial position.
+    </p>
+
+    <h2>Writing mode <code>vertical-lr</code></h2>
+
+    <p>
+      If the lines of text are vertical and flowing from right to left
+      (CSS <code>writing-mode</code> property set to <code>vertical-rl</code>)
+      then the start of the content is now the top right corner. Continuing
+      with the previous reasoning, the expected behavior should be:
+    </p>
+
+    <ul>
+      <li>Initially render the top right corner of the content by
+        making it match the top right corner of the scrollable element.</li>
+      <li>
+        Define <code>scrollLeft</code> and <code>scrollTop</code>
+        to be equal to zero for this initial position.
+      </li>
+    </ul>
+
+    <div class="example" style="writing-mode: vertical-rl">
+      <div class="scroller">
+        <div class="grid">
+          <div>0</div>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+          <div>6</div>
+          <div>7</div>
+          <div>8</div>
+        </div>
+      </div>
+      <div>
+        <label>element.scrollLeft</label>
+        <input type="number"/>
+      </div>
+      <div>
+        <label>element.scrollTop</label>
+        <input type="number"/>
+      </div>
+    </div>
+
+    <p>One more time,
+      Firefox and Safari follow these conventions but Chrome defines
+      <code>scrollLeft</code>
+      to be zero when the element its scrolled to its leftmost position.
+    </p>
+
+    <p>Additionally, another interoperability issue can be noticed:
+      Chrome and Safari
+      puts the vertical scroll bar on the right side but Firefox puts it on
+      the left side.
+    </p>
+
+    <h2>Other writing modes</h2>
+
+    <p>The cases discussed above are the most common writing modes used in
+      practice. However, one can actually combine any value of
+      <code>direction</code> and <code>writing-mode</code>.
+      The latter has two more properties
+      <code>sideways-rl</code> and <code>sideways-lr</code>
+      but they behave respectively the same as
+      <code>vertical-rl</code> and <code>vertical-lr</code>
+      when it comes to content flow
+      (they only affect <a href="https://drafts.csswg.org/css-writing-modes-4/#typographic-mode">typographic mode</a>). So there are really
+      only two remaining cases:
+    </p>
+
+    <h3>vertical-lr, rtl</h3>
+    <div class="example" style="writing-mode: vertical-lr; direction: rtl;">
+      <div class="scroller">
+        <div class="grid">
+          <div>0</div>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+          <div>6</div>
+          <div>7</div>
+          <div>8</div>
+        </div>
+      </div>
+      <div>
+        <label>element.scrollLeft</label>
+        <input type="number"/>
+      </div>
+      <div>
+        <label>element.scrollTop</label>
+        <input type="number"/>
+      </div>
+    </div>
+
+    <ul>
+      <li>
+        Bottom left corner of the content initially rendered
+        by making it match the bottom left corner of the scrollable element.
+      </li>
+      <li>
+        Horizontal bar on the bottom, vertical bar on the right.
+      </li>
+      <li>Initial scrollLeft is zero.</li>
+      <li>Initial scrollTop is zero in
+        Firefox and Safari but nonzero in Chrome.</li>
+    </ul>
+
+    <h3>vertical-rl, rtl</h3>
+    <div class="example" style="writing-mode: vertical-rl; direction: rtl;">
+      <div class="scroller">
+        <div class="grid">
+          <div>0</div>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+          <div>6</div>
+          <div>7</div>
+          <div>8</div>
+        </div>
+      </div>
+      <div>
+        <label>element.scrollLeft</label>
+        <input type="number"/>
+      </div>
+      <div>
+        <label>element.scrollTop</label>
+        <input type="number"/>
+      </div>
+    </div>
+
+    <ul>
+      <li>
+        Bottom right corner of the content initially rendered
+        by making it match the bottom right corner of the scrollable element.
+      </li>
+      <li>
+        Horizontal bar on the bottom.
+      </li>
+      <li>Initial scrollLeft is zero.</li>
+      <li>
+        Vertical bar on the left in Firefox but on the right in Safari and
+        Chrome.
+      </li>
+      <li>Initial scrollTop is zero in
+        Firefox and Safari but nonzero in Chrome.</li>
+    </ul>
+
+    <h2>Conclusion</h2>
+
+    <ol>
+      <li>
+        Scrollable elements are always initially scrolled so the start of
+        their content is visible and placed at one corner. Behavior is
+        well-defined and implemented consistently.
+      </li>
+      <li>
+        Relative values of <code>scrollLeft</code>
+        (respectively <code>scrollTop</code>) are also consistent
+        in all browsers:
+        The difference between a start and end scroll position is
+        positive if the content is scrolled rightward (respectively downward).
+      </li>
+      <li>
+        Absolute values of <code>scrollLeft</code>
+        and <code>scrollTop</code> are compatible in Firefox and Safari:
+        They are alway zero at the initial scroll position.
+        However, Chromium behaves differently if <code>direction</code>
+        is <code>rtl</code> or if <code>writing-mode</code> is
+        <code>vertical-rl</code>.
+      </li>
+      <li>
+        Scrollbar positions are compatible in Chromium and Safari. However,
+        Firefox behaves differently if for <code>vertical-lr, lrt</code>
+        and  <code>vertical-rl, rlt</code> writing modes.
+    </ol>
+
+    <p>
+      Point 2 (relative positions) is
+      <a href="https://drafts.csswg.org/cssom-view/#scrolling-area-origin">explicit</a> in the CSSOM View specification and the description of how
+      to
+      <a href="https://drafts.csswg.org/cssom-view/#scroll-an-element">scroll
+        an element</a> assumes a behavior
+      compatible with Firefox and WebKit's for point 3 (absolute positions):
+    </p>
+    <ul>
+      <li>scrollLeft is nonnegative if horizontal scroll is rightward
+        and nonpositive otherwise.</li>
+      <li>scrollTop is nonnegative if horizontal scroll is downward
+        and nonpositive otherwise.</li>
+    </ul>
+    <p>
+      At the time of writing, point 4 (scroll bars position) does not seem to
+      be defined by any specification.
+    </p>
+  </body>
+</html>
