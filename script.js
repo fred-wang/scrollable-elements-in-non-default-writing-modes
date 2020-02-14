@@ -22,4 +22,9 @@ window.addEventListener("load", function() {
             });
         })
     });
+
+    var behavior = scroll_coordinates_behavior();
+    for (property in behavior) {
+        document.getElementById(`behavior_${property}`).innerText = behavior[property];
+    }
 })

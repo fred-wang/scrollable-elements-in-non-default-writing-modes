@@ -4,6 +4,7 @@
     <title>Scrollable elements in non-default writing modes</title>
     <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="style.css"></link>
+    <script type="text/javascript" src="scroll-coordinates-behavior.js"></script>
     <script type="text/javascript" src="script.js"></script>
   </head>
   <body>
@@ -408,6 +409,18 @@
         <input type="number"/>
       </div>
     </div>
+
+    <h2 id="feature_detection">Feature detection</h2>
+
+    <p>One can use <a href="scroll-coordinates-behavior.js">this script</a>
+      to detect the behavior of scroll coordinates in a browser. The result
+      for your browser is the following:
+    </p>
+
+    <ul>
+      <li>Decreasing coordinates when scrolling leftward: <strong id="behavior_decreasing"></strong></li>
+      <li>Nonpositive coordinates for leftward scroller: <strong id="behavior_nonpositive"></strong></li>
+    </ul>
 
     <h2>Conclusion</h2>
 
