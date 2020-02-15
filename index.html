@@ -119,6 +119,8 @@
       positive value. Unfortunately, this counter is not very reliable and
       so we invite users of the top website and libraries triggering this
       counter to check and update their pages to avoid false positives.
+      This <a href="#feature_detection">feature detection</a> does <em>not</em>
+      trigger the use counter.
     </p>
 
     <p>In any case, because of the unreliability of user counter, we are
@@ -129,7 +131,7 @@
 
     <h3>Anything I should be aware if I rely on library XXX.js?</h3>
 
-    <p>Some polyfils for <code>ResizeObserver</code> such as
+    <p>Some polyfills for <code>ResizeObserver</code> such as
       <a href="https://github.com/procurios/ResizeSensor">ResizeSensor</a>
       or <a href="https://github.com/sdecima/javascript-detect-element-resize">javascript-detect-element-resize</a> rely on "size change detectors" implemented
       as scrollable elements. When pages in non-default writing modes use any
