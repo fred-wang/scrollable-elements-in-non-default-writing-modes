@@ -93,12 +93,11 @@
     <p>Typically, your scrollable elements will scroll to a wrong position
       or won't scroll at all.</p>
 
-    <h3 id="feature_detection">Feature detection</h3>
+    <h3 id="feature_detection">Is there a feature detection available for this behavior change?</h3>
 
     <p>One can use <a href="scroll-coordinates-behavior.js">this script</a>
       to detect the behavior of scroll coordinates in a browser. The result
-      for your browser is the following (results should be true if your browser
-      follow the CSSOM specification):
+      for your browser is the following:
     </p>
 
     <ul>
@@ -106,6 +105,13 @@
       <li>Nonpositive coordinates for scroller with leftward overflow: <strong id="behavior_nonpositive"></strong></li>
     </ul>
 
+    <p>
+      Browsers following standard behavior will return true in both cases.
+      For the first point, all but old versions of Internet Explorer and Edge
+      will return true. For the second point, Chromium will return false
+      with the legacy behavior and true with the newer behavior.
+    </p>
+    
     <h3>How are you shipping the new behavior?</h3>
 
     <p>To detect potential affected URLs, we rely on a use counter which
