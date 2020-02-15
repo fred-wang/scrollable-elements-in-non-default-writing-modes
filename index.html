@@ -12,7 +12,7 @@
 
     <h2>FAQ</h2>
 
-    <h3>What should I know about scroll positions and writing modes?</h3>
+    <h3 id="what-should-i-know">What should I know about scroll positions and writing modes?</h3>
 
     <p>
       One can use the <code>scrollLeft</code> and <code>scrollTop</code>
@@ -35,10 +35,10 @@
       (e.g. Mongolian).
     </p>
 
-    <h3>What will change in Chromium?</h3>
+    <h3 id="what-will-change">What will change in Chromium?</h3>
 
     <p>
-      Chromium will follow the standard behavior used by other browsers:
+      Chromium will follow the standard behavior:
     </p>
 
     <ul>
@@ -54,7 +54,17 @@
       </li>
     </ul>
 
-    <h3>Am I affected by this change?</h3>
+    <h3 id="browser-conventions">What are browser scroll conventions?</h3>
+
+    <p>
+      Latest releases of WebKit (e.g. Safari) or Gecko (e.g. Firefox)
+      use the <a href="#what-will-change">standard behavior</a> and so will
+      future versions of Blink (e.g. Google Chrome, Edge, Opera).
+      Old versions of browsers can use a different convention that you can
+      check via <a href="#feature_detection">feature detection</a>.
+    </p>
+
+    <h3 id="am-i-affected">Am I affected by this change?</h3>
 
     <p>You are <em>not</em> affected by this change if:</p>
     <ol>
@@ -88,7 +98,7 @@
       </li>
     </ul>
 
-    <h3>How can my content be broken after this change?</h3>
+    <h3 id="broken-content">How can my content be broken after this change?</h3>
 
     <p>Typically, your scrollable elements will scroll to a wrong position
       or won't scroll at all.</p>
@@ -112,7 +122,7 @@
       with the legacy behavior and true with the newer behavior.
     </p>
     
-    <h3>How are you shipping the new behavior?</h3>
+    <h3 id="shipping">How are you shipping the new behavior?</h3>
 
     <p>To detect potential affected URLs, we rely on a use counter which
       basically measures when a scroll coordinate is incorrectly set to a
@@ -129,7 +139,7 @@
       we are analyzing carefully.
     </p>
 
-    <h3>Anything I should be aware if I rely on library XXX.js?</h3>
+    <h3 id="libraries">Anything I should be aware if I rely on library XXX.js?</h3>
 
     <p>Some polyfills for <code>ResizeObserver</code> such as
       <a href="https://github.com/procurios/ResizeSensor">ResizeSensor</a>
