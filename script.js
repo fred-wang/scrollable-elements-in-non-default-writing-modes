@@ -1,3 +1,10 @@
+window.addEventListener("DOMContentLoaded", function() {
+    var behavior = scroll_coordinates_behavior();
+    for (property in behavior) {
+        document.getElementById(`behavior_${property}`).innerText = behavior[property];
+    }
+});
+
 window.addEventListener("load", function() {
     Array.from(document.querySelectorAll(".example")).forEach(div => {
         var scroller = div.getElementsByClassName("scroller")[0];
@@ -22,9 +29,4 @@ window.addEventListener("load", function() {
             });
         })
     });
-
-    var behavior = scroll_coordinates_behavior();
-    for (property in behavior) {
-        document.getElementById(`behavior_${property}`).innerText = behavior[property];
-    }
 })

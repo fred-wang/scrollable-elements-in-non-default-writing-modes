@@ -10,14 +10,124 @@
   <body>
     <h1>Scrollable elements in non-default writing modes</h1>
 
+    <h2>FAQ</h2>
 
-    <h2>scrollLeft and scrollTop properties</h2>
+    <h3>What should I know about scroll positions and writing modes?</h3>
 
     <p>
-      When an element has scrollable overflow, it is possible to use its
-      <code>scrollLeft</code> and <code>scrollTop</code> properties to get
-      and set its horizontal and vertical scroll positions:
+      One can use the <code>scrollLeft</code> and <code>scrollTop</code>
+      properties to get and set scroll positions of an element with
+      scrollable overflow. The scroll position can be set to specific
+      coordinates using <code>scrollTo()</code> and <code>scroll()</code>.
+      Another way to perform scrolling is to reveal a descendant
+      via <code>scrollIntoView()</code> or to scroll by a certain amount
+      via <code>scrollBy()</code>, <code>scrollLeft += 5</code> etc.
     </p>
+
+    <p>By default, the lines of the web page are horizontal and flow vertically
+      from top to bottom
+      (CSS <code>writing-mode</code> property set to
+      <code>horizontal-tb</code>) and each one is read from left to right
+      (CSS <code>direction</code> property set to <code>ltr</code>).
+      However, other modes exist such as <code>direction: rtl</code>
+      (e.g. Arabic or Hebrew), <code>writing-mode: vertical-rl</code> (e.g.
+      in Japanese or Korean) or <code>writing-mode: vertical-lr</code>
+      (e.g. Mongolian).
+    </p>
+
+    <h3>What will change in Chromium?</h3>
+
+    <p>
+      Chromium will follow the standard behavior used by other browsers:
+    </p>
+
+    <ul>
+      <li><code>scrollLeft</code> and <code>scrollTop</code> are initially zero.</li>
+      <li><code>scrollLeft</code> is nonnegative if content overflows
+        rightward and nonpositive otherwise.</li>
+      <li><code>scrollTop</code> is nonnegative if content overflows
+        downward and nonpositive otherwise.</li>
+      <li><code>scrollTop</code> increases when scrolling downward and
+        decreases in the other direction.
+      </li>
+    </ul>
+
+    <h3>Am I affected by this change?</h3>
+
+    <p>You are not affected by this change if:</p>
+    <ol>
+      <li>You only use scrollers that overflow in the rightward and downward
+        direction (e.g. default or Mongolian modes).</li>
+      <li>The first point does not hold, but you
+        only rely on <em>relative</em> scroll positions
+        (e.g. operations like
+        <code>scrollBy()</code> or
+        <code>delta = oldScrollTop - element.scrollTop</code>).
+      </li>
+      <li>The two first points don't hold, but you perform
+        <a href="#feature_detection">feature detections</a>
+        to deal with inconsistent conventions of each browser.
+      </li>
+    </ol>
+
+    <p>Conversely, you
+      may be affected by this change if all of these conditions hold:</p>
+    <ul>
+      <li>You use a scroller that overflows in the leftward or upward
+        direction (e.g. Hebrew, Arabic, Japanese, Korean modes...)</li>
+      <li>You rely on absolute scroll positions in a fundamental way.</li>
+      <li>
+        You don't perform <a href="#feature_detection">feature detections</a>
+        to handle inconsistent browser behaviors (this includes the unreliable
+        method of UA sniffing).
+      </li>
+    </ul>
+
+    <h3>How can my content be broken after this change?</h3>
+
+    <p>Typically, your scrollable elements will scroll to a bad position
+      or won't scroll at all.</p>
+    
+    <h3 id="feature_detection">Feature detection</h3>
+
+    <p>One can use <a href="scroll-coordinates-behavior.js">this script</a>
+      to detect the behavior of scroll coordinates in a browser. The result
+      for your browser is the following (should be true if your browser
+      follow the CSSOM specification):
+    </p>
+
+    <ul>
+      <li>Decreasing coordinates when scrolling leftward: <strong id="behavior_decreasing"></strong></li>
+      <li>Nonpositive coordinates for scroller with leftward overflow: <strong id="behavior_nonpositive"></strong></li>
+    </ul>
+
+    <h3>Anything I should be aware if I rely on library XXX.js ?</h3>
+
+    <p>TODO: ResizeObserver, feature detection with scrollIntoView</p>
+    
+    <h2>Demos and analysis</h2>
+
+    <h3>Default writing mode</h3>
+
+    <p>
+      In that writing mode,
+      there are more or less natural conventions for scrollable elements
+      that have always been followed by browsers:
+    </p>
+    <ol>
+      <li>Initially render the top left corner of the content
+        by
+        making it match the top left corner of the scrollable element.</li>
+      <li>
+        Put the horizontal scroll bar on the bottom and the vertical scroll bar
+        on the right.
+      </li>
+      <li>
+        Define <code>scrollLeft</code> and <code>scrollTop</code>
+        to be equal to zero for this initial position.
+      </li>
+    </ol>
+
 
     <div class="example">
       <div class="scroller">
@@ -43,43 +153,8 @@
       </div>
     </div>
 
-    <p>
-      The <code>scrollLeft</code> value (respectively <code>scrollTop</code>)
-      increases when scrolling the element rightward (respectively downward).
-    </p>
-    <p>
-      Modern browsers follow this convention in all
-      <a href="https://drafts.csswg.org/css-writing-modes-4/#writing-mode">writing modes</a>,
-      even if in the past Internet Explorer used to have a different convention.
-    </p>
 
-    <h2>Default writing mode</h2>
-
-    <p>
-      By default, the lines of the web page are horizontal and flow vertically
-      from top to bottom
-      (CSS <code>writing-mode</code> property set to
-      <code>horizontal-tb</code>) and each one is read from left to right
-      (CSS <code>direction</code> property set to <code>ltr</code>).
-      In that writing mode,
-      there are more or less natural conventions for scrollable elements
-      that have always been followed by browsers:
-    </p>
-    <ol>
-      <li>Initially render the top left corner of the content
-        by
-        making it match the top left corner of the scrollable element.</li>
-      <li>
-        Put the horizontal scroll bar on the bottom and the vertical scroll bar
-        on the right.
-      </li>
-      <li>
-        Define <code>scrollLeft</code> and <code>scrollTop</code>
-        to be equal to zero for this initial position.
-      </li>
-    </ol>
-
-    <h2>Writing mode <code>vertical-lr</code></h2>
+    <h3>Writing mode <code>vertical-lr</code></h3>
 
     <p>
       If the lines of text are vertical and flowing from left to right
@@ -115,7 +190,7 @@
       </div>
     </div>
 
-    <h2>Writing mode <code>rtl</code></h2>
+    <h3>Writing mode <code>rtl</code></h3>
 
     <p>
       If each line flows horizontally from right to left
@@ -166,7 +241,7 @@
       <code>scrollLeft</code> is nonzero at the initial position.
     </p>
 
-    <h2>Writing mode <code>vertical-rl</code></h2>
+    <h3>Writing mode <code>vertical-rl</code></h3>
 
     <p>
       If the lines of text are vertical and flowing from right to left
@@ -220,7 +295,7 @@
       the left side.
     </p>
 
-    <h2>Other writing modes</h2>
+    <h3>Other writing modes</h3>
 
     <p>The cases discussed above are the most common writing modes used in
       practice. However, one can actually combine any value of
@@ -229,7 +304,7 @@
       which are not implemented yet in all browsers.
     </p>
 
-    <h3><code>vertical-lr</code>, <code>rtl</code></h3>
+    <h4><code>vertical-lr</code>, <code>rtl</code></h4>
     <div class="example" style="writing-mode: vertical-lr; direction: rtl;">
       <div class="scroller">
         <div class="grid">
@@ -267,7 +342,7 @@
         Firefox and Safari but nonzero in Chrome.</li>
     </ul>
 
-    <h3><code>vertical-rl</code>, <code>rtl</code></h3>
+    <h4><code>vertical-rl</code>, <code>rtl</code></h4>
     <div class="example" style="writing-mode: vertical-rl; direction: rtl;">
       <div class="scroller">
         <div class="grid">
@@ -309,7 +384,7 @@
         Firefox and Safari but nonzero in Chrome.</li>
     </ul>
 
-    <h3><code>sideways-rl</code></h3>
+    <h4><code>sideways-rl</code></h4>
 
     <div class="example" style="writing-mode: sideways-rl">
       <div class="scroller">
@@ -335,7 +410,7 @@
       </div>
     </div>
 
-    <h3><code>sideways-lr</code></h3>
+    <h4><code>sideways-lr</code></h4>
     <div class="example" style="writing-mode: sideways-lr">
       <div class="scroller">
         <div class="grid">
@@ -360,7 +435,7 @@
       </div>
     </div>
 
-    <h3><code>sideways-lr</code>, <code>rtl</code></h3>
+    <h4><code>sideways-lr</code>, <code>rtl</code></h4>
     <div class="example" style="writing-mode: sideways-lr; direction: rtl;">
       <div class="scroller">
         <div class="grid">
@@ -385,7 +460,7 @@
       </div>
     </div>
 
-    <h3><code>sideways-rl</code>, <code>rtl</code></h3>
+    <h4><code>sideways-rl</code>, <code>rtl</code></h4>
     <div class="example" style="writing-mode: sideways-rl; direction: rtl;">
       <div class="scroller">
         <div class="grid">
@@ -410,19 +485,8 @@
       </div>
     </div>
 
-    <h2 id="feature_detection">Feature detection</h2>
 
-    <p>One can use <a href="scroll-coordinates-behavior.js">this script</a>
-      to detect the behavior of scroll coordinates in a browser. The result
-      for your browser is the following:
-    </p>
-
-    <ul>
-      <li>Decreasing coordinates when scrolling leftward: <strong id="behavior_decreasing"></strong></li>
-      <li>Nonpositive coordinates for leftward scroller: <strong id="behavior_nonpositive"></strong></li>
-    </ul>
-
-    <h2>Conclusion</h2>
+    <h3>Conclusion</h3>
 
     <ol>
       <li>
