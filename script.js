@@ -1,8 +1,10 @@
 window.addEventListener("DOMContentLoaded", function() {
-    var behavior = scroll_coordinates_behavior();
-    for (property in behavior) {
+    var behavior = scroll_coordinates_behavior_with_scrollIntoView();
+    for (property in behavior)
         document.getElementById(`behavior_${property}`).innerText = behavior[property];
-    }
+    var behavior2 = scroll_coordinates_behavior_by_setting_nonpositive_scrollLeft();
+    for (property in behavior)
+        document.getElementById(`behavior2_${property}`).innerText = behavior2[property];
 });
 
 window.addEventListener("load", function() {

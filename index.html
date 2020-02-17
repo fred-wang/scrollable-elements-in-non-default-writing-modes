@@ -105,18 +105,30 @@
 
     <h3 id="feature_detection">Is there a feature detection available for this behavior change?</h3>
 
-    <p>One can use <a href="scroll-coordinates-behavior.js">this script</a>
-      to detect the behavior of scroll coordinates in a browser. The result
-      for your browser is the following:
+    <p>One can use one of the function
+      from <a href="scroll-coordinates-behavior.js">this script</a>
+      to detect the behavior of scroll coordinates in a browser.
+      There is also a <a href="https://github.com/othree/jquery.rtl-scroll-type">jquery script</a> performing similar checks.
     </p>
+
+    <p>The result of <code>scroll_coordinates_behavior_with_scrollIntoView()</code>
+      for your browser is the following:</p>
 
     <ul>
       <li>Decreasing coordinates when scrolling leftward: <strong id="behavior_decreasing"></strong></li>
       <li>Nonpositive coordinates for scroller with leftward overflow: <strong id="behavior_nonpositive"></strong></li>
     </ul>
 
+    <p>The result of <code>scroll_coordinates_behavior_by_setting_nonpositive_scrollLeft()</code>
+      for your browser is the following:</p>
+
+    <ul>
+      <li>Decreasing coordinates when scrolling leftward: <strong id="behavior2_decreasing"></strong></li>
+      <li>Nonpositive coordinates for scroller with leftward overflow: <strong id="behavior2_nonpositive"></strong></li>
+    </ul>
+
     <p>
-      Browsers following standard behavior will return true in both cases.
+      Browsers following standard behavior will return true for both properties.
       For the first point, all but old versions of Internet Explorer and Edge
       will return true. For the second point, Chromium will return false
       with the legacy behavior and true with the newer behavior.
@@ -157,14 +169,12 @@
     <p>Some libraries such as
       <a href="https://github.com/KingSora/OverlayScrollbars/blob/master/js/OverlayScrollbars.js">OverlayScrollbars.js</a>
       or
-      <a href="https://github.com/othree/jquery.rtl-scroll-type">jquery.rtl-scroll-type</a> performs feature detections in a way that triggers the use
-      counter and so again leads to false positives. You are invited to
-      change follow the approach from
-      <a href="#feature_detection">feature detection</a> instead.
+      <a href="https://github.com/othree/jquery.rtl-scroll-type">jquery.rtl-scroll-type</a> used to perform feature detections in a way that triggers the
+      counter and so led to false positives. You are invited to
+      follow the approach from
+      <a href="#feature_detection">feature detection</a> instead or to upgrade
+      to the latest versions of these libraries.
     </p>
-
-    <p>Note: patches have been submitted to these libraries and will be
-      hopefully be integrated in future releases.</p>
 
     <h2>Demos and analysis</h2>
 
