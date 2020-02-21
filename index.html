@@ -6,11 +6,18 @@
     <link rel="stylesheet" type="text/css" href="style.css"></link>
     <script type="text/javascript" src="scroll-coordinates-behavior.js"></script>
     <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
   </head>
   <body>
     <h1>Scrollable elements in non-default writing modes</h1>
 
     <h2>FAQ</h2>
+
+    <h3 id="chrome-status">What is the ChromeStatus entry for this change?</h3>
+
+    <p>It's called <a href="https://www.chromestatus.com/feature/5759578031521792">Interoperable Element's scrollLeft and scrollTop in non-default writing modes</a>.</p>
 
     <h3 id="what-should-i-know">What should I know about scroll positions and writing modes?</h3>
 
@@ -54,9 +61,43 @@
       </li>
     </ul>
 
-    <h3 id="chrome-status">What is the ChromeStatus entry for this change?</h3>
+    <h3 id="feature_detection">Is there a feature detection available for this behavior change?</h3>
 
-    <p>It's called <a href="https://www.chromestatus.com/feature/5759578031521792">Interoperable Element's scrollLeft and scrollTop in non-default writing modes</a>.</p>
+    <p>One can use one of the functions below
+      from <a href="scroll-coordinates-behavior.js">this script</a>
+      to detect the behavior of scroll coordinates in a browser.
+      It is recommended to cache the result to avoid appending and removing the
+      test <code>&lt;div&gt;</code> each time the function is called, as it is
+      done in this
+      <a href="https://github.com/othree/jquery.rtl-scroll-type">jquery script</a>.
+    </p>
+
+    <pre><code class="language-js" id="feature_detection_snippet"></code></pre>
+
+    <h3 id="feature_detection_result">What is the result of the feature detection in my browser?</h3>
+
+    <p>The result of <code>scroll_coordinates_behavior_with_scrollIntoView()</code>
+      for your browser is the following:</p>
+
+    <ul>
+      <li>Decreasing coordinates when scrolling leftward: <strong id="behavior_decreasing"></strong></li>
+      <li>Nonpositive coordinates for scroller with leftward overflow: <strong id="behavior_nonpositive"></strong></li>
+    </ul>
+
+    <p>The result of <code>scroll_coordinates_behavior_by_setting_nonpositive_scrollLeft()</code>
+      for your browser is the following:</p>
+
+    <ul>
+      <li>Decreasing coordinates when scrolling leftward: <strong id="behavior2_decreasing"></strong></li>
+      <li>Nonpositive coordinates for scroller with leftward overflow: <strong id="behavior2_nonpositive"></strong></li>
+    </ul>
+
+    <p>
+      Browsers following standard behavior will return true for both properties.
+      For the first point, all but old versions of Internet Explorer and Edge
+      will return true. For the second point, Chromium will return false
+      with the legacy behavior and true with the newer behavior.
+    </p>
 
     <h3 id="browser-conventions">What are browser scroll conventions?</h3>
 
@@ -107,37 +148,7 @@
     <p>Typically, your scrollable elements will scroll to a wrong position
       or won't scroll at all.</p>
 
-    <h3 id="feature_detection">Is there a feature detection available for this behavior change?</h3>
 
-    <p>One can use one of the function
-      from <a href="scroll-coordinates-behavior.js">this script</a>
-      to detect the behavior of scroll coordinates in a browser.
-      There is also a <a href="https://github.com/othree/jquery.rtl-scroll-type">jquery script</a> performing similar checks.
-    </p>
-
-    <p>The result of <code>scroll_coordinates_behavior_with_scrollIntoView()</code>
-      for your browser is the following:</p>
-
-    <ul>
-      <li>Decreasing coordinates when scrolling leftward: <strong id="behavior_decreasing"></strong></li>
-      <li>Nonpositive coordinates for scroller with leftward overflow: <strong id="behavior_nonpositive"></strong></li>
-    </ul>
-
-    <p>The result of <code>scroll_coordinates_behavior_by_setting_nonpositive_scrollLeft()</code>
-      for your browser is the following:</p>
-
-    <ul>
-      <li>Decreasing coordinates when scrolling leftward: <strong id="behavior2_decreasing"></strong></li>
-      <li>Nonpositive coordinates for scroller with leftward overflow: <strong id="behavior2_nonpositive"></strong></li>
-    </ul>
-
-    <p>
-      Browsers following standard behavior will return true for both properties.
-      For the first point, all but old versions of Internet Explorer and Edge
-      will return true. For the second point, Chromium will return false
-      with the legacy behavior and true with the newer behavior.
-    </p>
-    
     <h3 id="shipping">How are you shipping the new behavior?</h3>
 
     <p>To detect potential affected URLs, we rely on a use counter which
@@ -179,6 +190,10 @@
       <a href="#feature_detection">feature detection</a> instead or to upgrade
       to the latest versions of these libraries.
     </p>
+
+    <h3 id="report">Where can I report feedback regarding the content of this page?</h3>
+
+    <p>Please use this <a href="https://github.com/fred-wang/scrollable-elements-in-non-default-writing-modes">GitHub repository</a>. Pull requests are welcome!</p>
 
     <h2>Demos and analysis</h2>
 

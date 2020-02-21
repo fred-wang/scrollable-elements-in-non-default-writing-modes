@@ -1,10 +1,15 @@
-window.addEventListener("DOMContentLoaded", function() {
+window.addEventListener("DOMContentLoaded", async function() {
     var behavior = scroll_coordinates_behavior_with_scrollIntoView();
     for (property in behavior)
         document.getElementById(`behavior_${property}`).innerText = behavior[property];
     var behavior2 = scroll_coordinates_behavior_by_setting_nonpositive_scrollLeft();
     for (property in behavior)
         document.getElementById(`behavior2_${property}`).innerText = behavior2[property];
+
+    var response = await fetch("./scroll-coordinates-behavior.js");
+    var code = document.getElementById("feature_detection_snippet");
+    code.innerText = await response.text();
+    hljs.highlightBlock(code);
 });
 
 window.addEventListener("load", function() {
